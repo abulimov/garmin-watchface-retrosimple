@@ -1,0 +1,16 @@
+<!-- Fonts were converted to fnt format by bmfont (https://www.angelcode.com/products/bmfont) -->
+<!-- The fonts are DSEG7/14 Classic https://www.keshikan.net/fonts-e.html -->
+<fonts>
+	<!-- DSEG7 bold 60px -->
+	<font id="TimeFont" filename="dseg7_bold_60px.fnt" antialias="false" filter="0123456789:" />
+	<!-- DSEG7 bold 38px -->
+	<font id="SecondsFont" filename="dseg7_bold_34px.fnt" antialias="false" filter="0123456789" />
+	<!-- DSEG14 bold 16px -->
+	<font id="DateFont" filename="dseg14_bold_16px.fnt" antialias="false" />
+	<!-- DSEG14 bold 20px -->
+	<font id="StepsFont" filename="dseg14_bold_20px.fnt" antialias="false" />
+	<!-- DSEG7 bold 10px -->
+	<font id="BatteryFont" filename="dseg7_bold_10px.fnt" antialias="false" filter="0123456789d" />
+	<!-- from https://github.com/blotspot/garmin-watchface-protomolecule/blob/master/resources-round-218x218/fonts/ -->
+	<font id="IconsFont" filename="icons-25px.fnt" antialias="true" />
+</fonts>

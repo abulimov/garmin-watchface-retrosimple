@@ -1,0 +1,9 @@
+.project
+/mir
+/bin
+/gen
+/internal-mir
+*.prg
+*.prg.debug.xml
+developer_key
+/resources/settings/secret.xml
