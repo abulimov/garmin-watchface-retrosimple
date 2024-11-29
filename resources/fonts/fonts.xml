@@ -5,6 +5,8 @@
 	<font id="TimeFont" filename="dseg7_bold_60px.fnt" antialias="false" filter="0123456789:" />
 	<!-- DSEG7 bold 38px -->
 	<font id="SecondsFont" filename="dseg7_bold_34px.fnt" antialias="false" filter="0123456789" />
+	<!-- DSEG14 bold 14px -->
+	<font id="WeatherFont" filename="dseg14_bold_14px.fnt" antialias="false" filter="-0123456789CF% " />
 	<!-- DSEG14 bold 16px -->
 	<font id="DateFont" filename="dseg14_bold_16px.fnt" antialias="false" />
 	<!-- DSEG14 bold 20px -->

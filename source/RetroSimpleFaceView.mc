@@ -8,14 +8,7 @@ using Toybox.ActivityMonitor;
 using Toybox.Time.Gregorian;
 
 class RetroSimpleFaceView extends WatchUi.WatchFace {
-  private var timeFont, secondsFont, dateFont, stepsFont, batteryFont, iconsFont;
   function initialize() {
-    timeFont = WatchUi.loadResource(Rez.Fonts.TimeFont);
-    secondsFont = WatchUi.loadResource(Rez.Fonts.SecondsFont);
-    dateFont = WatchUi.loadResource(Rez.Fonts.DateFont);
-    stepsFont = WatchUi.loadResource(Rez.Fonts.StepsFont);
-    batteryFont = WatchUi.loadResource(Rez.Fonts.BatteryFont);
-    iconsFont = WatchUi.loadResource(Rez.Fonts.IconsFont);
     WatchFace.initialize();
   }
 
@@ -29,6 +22,16 @@ class RetroSimpleFaceView extends WatchUi.WatchFace {
   // loading resources into memory.
   function onShow() as Void {}
 
+  private function drawLabelText(
+    dc as Dc,
+    labelID as String,
+    text as String
+  ) as Void {
+    var label = WatchUi.View.findDrawableById(labelID) as WatchUi.Text;
+    label.setText(text);
+    label.draw(dc);
+  }
+
   // calls every second for partial update
   //
   function onPartialUpdate(dc as Dc) as Void {
@@ -39,24 +42,14 @@ class RetroSimpleFaceView extends WatchUi.WatchFace {
     var secondsString1 = (clockTime.sec % 10).format("%d");
     dc.setClip(113, 0, 62, 65);
     // seconds
-    dc.drawText(
-      115,
-      30,
-      secondsFont,
-      secondsString0,
-      Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER
-    );
-    dc.drawText(
-      142,
-      30,
-      secondsFont,
-      secondsString1,
-      Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER
-    );
+    drawLabelText(dc, "SecondsLabel0", secondsString0);
+    drawLabelText(dc, "SecondsLabel1", secondsString1);
   }
 
   // Update the view
   function onUpdate(dc as Dc) as Void {
+    // device settings - we use time format and temperature units
+    var sysSettings = System.getDeviceSettings();
     // Get the current time and date
     var clockTime = System.getClockTime();
     var today = Gregorian.info(Time.now(), Time.FORMAT_MEDIUM);
@@ -67,8 +60,15 @@ class RetroSimpleFaceView extends WatchUi.WatchFace {
     var weather = Weather.getCurrentConditions();
     var weatherString = "";
     if (weather != null) {
-      weatherString = Lang.format("$1$C  $2$%", [
-        weather.temperature.format("%d"),
+      var temp = weather.temperature;
+      var tempLetter = "C";
+      if (sysSettings.temperatureUnits != System.UNIT_METRIC) {
+        temp = weather.temperature * 1.8 + 32;
+        tempLetter = "F";
+      }
+      weatherString = Lang.format("$1$$2$ $3$%", [
+        temp.format("%d"),
+        tempLetter,
         weather.precipitationChance.format("%02d"),
       ]);
     }
@@ -90,12 +90,16 @@ class RetroSimpleFaceView extends WatchUi.WatchFace {
     if (settings.notificationCount != 0) {
       notificationsString = "n";
     }
-    
+
     // time
-    var hourString0 = (clockTime.hour / 10).format("%d");
-    var hourString1 = (clockTime.hour % 10).format("%d");
-    var minuteString0 = (clockTime.min / 10).format("%d");
-    var minuteString1 = (clockTime.min % 10).format("%d");
+    var hour = clockTime.hour;
+    if (!sysSettings.is24Hour && hour > 12) {
+      hour -= 12;
+    }
+    var hoursString0 = (hour / 10).format("%d");
+    var hoursString1 = (hour % 10).format("%d");
+    var minutesString0 = (clockTime.min / 10).format("%d");
+    var minutesString1 = (clockTime.min % 10).format("%d");
 
     // date
     var dateString = Lang.format("$1$ $2$ $3$", [
@@ -112,98 +116,25 @@ class RetroSimpleFaceView extends WatchUi.WatchFace {
     dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_BLACK);
 
     // time, we want the digits closer to each other than font allows
-    dc.drawText(
-      -4,
-      107,
-      timeFont,
-      hourString0,
-      Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER
-    );
-    dc.drawText(
-      38,
-      107,
-      timeFont,
-      hourString1,
-      Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER
-    );
-    dc.drawText(
-      89,
-      107,
-      timeFont,
-      minuteString0,
-      Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER
-    );
-    dc.drawText(
-      131,
-      107,
-      timeFont,
-      minuteString1,
-      Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER
-    );
-    dc.drawText(
-      88,
-      107,
-      timeFont,
-      ":",
-      Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER
-    );
-
+    drawLabelText(dc, "HoursLabel0", hoursString0);
+    drawLabelText(dc, "HoursLabel1", hoursString1);
+    drawLabelText(dc, "MinutesLabel0", minutesString0);
+    drawLabelText(dc, "MinutesLabel1", minutesString1);
+    drawLabelText(dc, "ColonLabel", ":");
     // battery
-    dc.drawText(
-      72,
-      10,
-      iconsFont,
-      batteryIcon,
-      Graphics.TEXT_JUSTIFY_RIGHT | Graphics.TEXT_JUSTIFY_VCENTER
-    );
-    dc.drawText(
-      100,
-      10,
-      batteryFont,
-      batteryString,
-      Graphics.TEXT_JUSTIFY_RIGHT | Graphics.TEXT_JUSTIFY_VCENTER
-    );
+    drawLabelText(dc, "BatteryIconLabel", batteryIcon);
+    drawLabelText(dc, "BatteryLabel", batteryString);
     // weather
-    dc.drawText(
-      99,
-      27,
-      dateFont,
-      weatherString,
-      Graphics.TEXT_JUSTIFY_RIGHT | Graphics.TEXT_JUSTIFY_VCENTER
-    );
+    drawLabelText(dc, "WeatherLabel", weatherString);
     // notifications
-    dc.drawText(
-      15,
-      47,
-      iconsFont,
-      notificationsString,
-      Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER
-    );
+    drawLabelText(dc, "NotificationsLabel", notificationsString);
     // date
-    dc.drawText(
-      2,
-      65,
-      dateFont,
-      dateString,
-      Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER
-    );
-
+    drawLabelText(dc, "DateLabel", dateString);
     // steps
-    dc.drawText(
-      120,
-      158,
-      stepsFont,
-      stepsString,
-      Graphics.TEXT_JUSTIFY_RIGHT | Graphics.TEXT_JUSTIFY_VCENTER
-    );
+    drawLabelText(dc, "StepsLabel", stepsString);
     // steps icon
-    dc.drawText(
-      125,
-      158,
-      iconsFont,
-      "s",
-      Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER
-    );
+    drawLabelText(dc, "StepsIconLabel", "s");
+    // draw seconds
     onPartialUpdate(dc);
   }
 
