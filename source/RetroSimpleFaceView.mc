@@ -8,7 +8,9 @@ using Toybox.ActivityMonitor;
 using Toybox.Time.Gregorian;
 
 class RetroSimpleFaceView extends WatchUi.WatchFace {
+  private var clipArea;
   function initialize() {
+    clipArea = WatchUi.loadResource(Rez.JsonData.secondsArea);
     WatchFace.initialize();
   }
 
@@ -36,11 +38,16 @@ class RetroSimpleFaceView extends WatchUi.WatchFace {
   //
   function onPartialUpdate(dc as Dc) as Void {
     dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_BLACK);
+    var ca = clipArea as Lang.Dictionary<Lang.String, Lang.Number>;
     var clockTime = System.getClockTime();
     // want the digits closer to each other than font allows
     var secondsString0 = (clockTime.sec / 10).format("%d");
     var secondsString1 = (clockTime.sec % 10).format("%d");
-    dc.setClip(113, 0, 62, 65);
+    dc.clearClip();
+    dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_WHITE);
+    dc.fillRectangle(ca["x"], ca["y"], ca["w"], ca["h"]);
+    dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_BLACK);
+    dc.setClip(ca["x"], ca["y"], ca["w"], ca["h"]);
     // seconds
     drawLabelText(dc, "SecondsLabel0", secondsString0);
     drawLabelText(dc, "SecondsLabel1", secondsString1);

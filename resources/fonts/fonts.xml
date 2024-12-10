@@ -10,7 +10,7 @@
 	<!-- DSEG14 bold 16px -->
 	<font id="DateFont" filename="dseg14_bold_16px.fnt" antialias="false" />
 	<!-- DSEG14 bold 20px -->
-	<font id="StepsFont" filename="dseg14_bold_20px.fnt" antialias="false" />
+	<font id="StepsFont" filename="dseg7_bold_20px.fnt" antialias="false" />
 	<!-- DSEG7 bold 10px -->
 	<font id="BatteryFont" filename="dseg7_bold_10px.fnt" antialias="false" filter="0123456789d" />
 	<!-- from https://github.com/blotspot/garmin-watchface-protomolecule/blob/master/resources-round-218x218/fonts/ -->
