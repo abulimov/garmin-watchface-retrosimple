@@ -58,7 +58,7 @@ class RetroSimpleFaceView extends WatchUi.WatchFace {
     var steps = info.steps;
     // weather
     var weather = Weather.getCurrentConditions();
-    var weatherString = "";
+    var weatherString = "--";
     if (weather != null) {
       var temp = weather.temperature;
       var tempLetter = "C";
@@ -66,11 +66,13 @@ class RetroSimpleFaceView extends WatchUi.WatchFace {
         temp = weather.temperature * 1.8 + 32;
         tempLetter = "F";
       }
-      weatherString = Lang.format("$1$$2$ $3$%", [
-        temp.format("%d"),
-        tempLetter,
-        weather.precipitationChance.format("%02d"),
-      ]);
+      if (temp != null) {
+        weatherString = Lang.format("$1$$2$ $3$%", [
+          temp.format("%d"),
+          tempLetter,
+          weather.precipitationChance.format("%02d"),
+        ]);
+      }
     }
     // battery
     var stats = System.getSystemStats();
