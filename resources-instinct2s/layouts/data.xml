@@ -1,0 +1,4 @@
+<resources>
+    <!-- clip area for seconds display -->
+    <jsonData id="secondsArea">{"x":110, "y":0, "w":50, "h":60}</jsonData>
+</resources>

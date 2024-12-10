@@ -1,0 +1,33 @@
+<layout id="WatchFace">
+    <!--seconds-->
+    <label id="SecondsLabel0" x="110" y="25" font="@Fonts.SecondsFont"
+        justification="Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER" />
+    <label id="SecondsLabel1" x="134" y="25" font="@Fonts.SecondsFont"
+        justification="Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER" />
+    <!--main
+    display-->
+    <label id="HoursLabel0" x="-4" y="100" font="@Fonts.TimeFont"
+        justification="Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER" />
+    <label id="HoursLabel1" x="34" y="100" font="@Fonts.TimeFont"
+        justification="Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER" />
+    <label id="MinutesLabel0" x="81" y="100" font="@Fonts.TimeFont"
+        justification="Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER" />
+    <label id="MinutesLabel1" x="119" y="100" font="@Fonts.TimeFont"
+        justification="Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER" />
+    <label id="ColonLabel" x="78" y="100" font="@Fonts.TimeFont"
+        justification="Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER" />
+    <label id="BatteryIconLabel" x="72" y="10" font="@Fonts.IconsFont"
+        justification="Graphics.TEXT_JUSTIFY_RIGHT | Graphics.TEXT_JUSTIFY_VCENTER" />
+    <label id="BatteryLabel" x="100" y="10" font="@Fonts.BatteryFont"
+        justification="Graphics.TEXT_JUSTIFY_RIGHT | Graphics.TEXT_JUSTIFY_VCENTER" />
+    <label id="WeatherLabel" x="97" y="25" font="@Fonts.WeatherFont"
+        justification="Graphics.TEXT_JUSTIFY_RIGHT | Graphics.TEXT_JUSTIFY_VCENTER" />
+    <label id="NotificationsLabel" x="15" y="41" font="@Fonts.IconsFont"
+        justification="Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER" />
+    <label id="DateLabel" x="2" y="59" font="@Fonts.DateFont"
+        justification="Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER" />
+    <label id="StepsLabel" x="110" y="142" font="@Fonts.StepsFont"
+        justification="Graphics.TEXT_JUSTIFY_RIGHT | Graphics.TEXT_JUSTIFY_VCENTER" />
+    <label id="StepsIconLabel" x="115" y="142" font="@Fonts.IconsFont"
+        justification="Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER" />
+</layout>
