@@ -43,11 +43,11 @@ class RetroSimpleFaceView extends WatchUi.WatchFace {
     // want the digits closer to each other than font allows
     var secondsString0 = (clockTime.sec / 10).format("%d");
     var secondsString1 = (clockTime.sec % 10).format("%d");
-    dc.clearClip();
+    // can't draw anything in power-saving mode without setting a clip area
+    dc.setClip(ca["x"], ca["y"], ca["w"], ca["h"]);
     dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_WHITE);
     dc.fillRectangle(ca["x"], ca["y"], ca["w"], ca["h"]);
     dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_BLACK);
-    dc.setClip(ca["x"], ca["y"], ca["w"], ca["h"]);
     // seconds
     drawLabelText(dc, "SecondsLabel0", secondsString0);
     drawLabelText(dc, "SecondsLabel1", secondsString1);
