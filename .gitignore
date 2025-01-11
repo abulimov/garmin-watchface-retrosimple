@@ -7,3 +7,5 @@
 *.prg.debug.xml
 developer_key
 /resources/settings/secret.xml
+/.vscode
+/face.iq
